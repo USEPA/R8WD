@@ -29,10 +29,26 @@ The United States Environmental Protection Agency (EPA) GitHub project code is p
 
 ## Installation
 
+The R package can be installed from GitHub using the `remotes` package:
+
 ```R
 if(!'remotes' %in% installed.packages()) install.packages('remotes')
 
 remotes::install_github("USEPA/R8WD")
 ```
 
+
+## Example
+
+After installing `R8WD`, it can be loaded and a quarto report generated. A list of organization names available in the Water Quality Portal is available in this csv: https://cdx.epa.gov/wqx/download/DomainValues/Organization.CSV. Note that a given organization may not have data available for the time period or parameters selected.
+
+```R
+# load the package
+library(R8WD)
+
+# generate a report
+create_report('BLCKFEET')
+```
+
+This will create and open a quarto document in RStudio. Render the quarto document to html output by pressing `Ctrl+Shift+K`.
 

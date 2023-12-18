@@ -2,12 +2,12 @@
 
 #' Generate a Water Quality Report for an organization
 #'
-#' @param org organization (short name in WQP) whose data should be used to build the report. Multiple organization names can be input as a character vector; names will be homogenized and data will be pooled for analysis purposes.
+#' @param org organization (short name in WQP) whose data should be used to build the report. Multiple organization names can be input as a character vector; names will be homogenized and data will be pooled for analysis purposes. A list of acceptable organization names is available in this csv: https://cdx.epa.gov/wqx/download/DomainValues/Organization.CSV.
 #' @param startDate start date for data used in the report, in format `\%m-\%d-\%Y`
 #' @param endDate final date for data used in the report, in format `\%m-\%d-\%Y`
 #' @param parameters parameters to use in report. Must be entered as an index of acceptable parameters listed in params$params (e.g., `parameters = c(1:4,7)`)
 #' @param extFile name of report-generating script, located in the inst/extdata folder of the R8WD R package
-#' @param prompt_user if TRUE, user is prompted to use one of the organization codes in the `tribes` object provided with `R8WD`.
+#' @param prompt_user if TRUE, user is prompted to use one of the organization short names in the `tribes` object provided with `R8WD`. .
 #' @param output either 'docx' or 'html'
 #' @param output_directory directory where output will be located. If the directory doesn't exist it will be created.
 #' @param draft_report TRUE or FALSE
@@ -49,7 +49,7 @@ create_report <- function(org = 'TURTLEMT',
 
   if (prompt_user) {
     if (!any(grepl(pattern = paste0(paste0('^', toupper(org), '$'), collapse = '|'), x = tribes))) {
-      stop(toupper(org), ' not found in list of Tribal organizations. Recommended organization names:\n', paste0(sort(tribes), collapse = '\n'))
+      message(toupper(org), ' not found in list of Tribal organizations. Recommended organization names:\n', paste0(sort(tribes), collapse = '\n'))
     }
   }
 

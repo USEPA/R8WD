@@ -17,7 +17,7 @@ create_report(
 )
 }
 \arguments{
-\item{org}{organization (short name in WQP) whose data should be used to build the report. Multiple organization names can be input as a character vector; names will be homogenized and data will be pooled for analysis purposes.}
+\item{org}{organization (short name in WQP) whose data should be used to build the report. Multiple organization names can be input as a character vector; names will be homogenized and data will be pooled for analysis purposes. A list of acceptable organization names is available in this csv: https://cdx.epa.gov/wqx/download/DomainValues/Organization.CSV.}
 
 \item{startDate}{start date for data used in the report, in format `\%m-\%d-\%Y`}
 
@@ -27,7 +27,7 @@ create_report(
 
 \item{extFile}{name of report-generating script, located in the inst/extdata folder of the R8WD R package}
 
-\item{prompt_user}{if TRUE, user is prompted to use one of the organization codes in the `tribes` object provided with `R8WD`.}
+\item{prompt_user}{if TRUE, user is prompted to use one of the organization short names in the `tribes` object provided with `R8WD`. .}
 
 \item{output}{either 'docx' or 'html'}
 
