@@ -5,7 +5,7 @@
 #' @param org organization (short name in WQP) whose data should be used to build the report. Multiple organization names can be input as a character vector; names will be homogenized and data will be pooled for analysis purposes. A list of acceptable organization names is available in this csv: https://cdx.epa.gov/wqx/download/DomainValues/Organization.CSV.
 #' @param startDate start date for data used in the report, in format `\%m-\%d-\%Y`
 #' @param endDate final date for data used in the report, in format `\%m-\%d-\%Y`
-#' @param parameters parameters to use in report. Must be entered as an index of acceptable parameters listed in params$params (e.g., `parameters = c(1:4,7)`)
+#' @param parameters parameters to use in report. Can be entered as exact characteristic names (for a complete list, see: https://cdx.epa.gov/wqx/download/DomainValues/Characteristic.CSV). Alternatively, this argument can be a numeric index of parameters listed in params$params (e.g., `parameters = c(1:4,7)`)
 #' @param extFile name of report-generating script, located in the inst/extdata folder of the R8WD R package
 #' @param prompt_user if TRUE, user is prompted to use one of the organization short names in the `tribes` object provided with `R8WD`. .
 #' @param output either 'docx' or 'html'
@@ -21,7 +21,7 @@
 create_report <- function(org = 'TURTLEMT',
                           startDate = '01-01-2015',
                           endDate   = '12-31-2022',
-                          parameters = 1:11,
+                          parameters = c('Total Phosphorus, mixed forms', 'Total Nitrogen, mixed forms', 'Escherichia coli', 'Dissolved oxygen (DO)', 'Temperature', 'Temperature, water', 'pH', 'Turbidity', 'Conductivity', 'Total suspended solids'),
                           extFile = 'script_generateReport.qmd',
                           prompt_user = TRUE,
                           output = 'html',
@@ -70,7 +70,13 @@ create_report <- function(org = 'TURTLEMT',
   ### add params
   # parameters
   # REPLACE_PARAMS
-  newParams  <- paste0(paste0(gsub(x = as.character(parameters), pattern = "\'|\"", replacement = ''), collapse = ','))
+  if (all(is.numeric(parameters))) {
+    newParams  <- paste0(paste0(gsub(x = as.character(parameters), pattern = "\'|\"", replacement = ''), collapse = ','))
+  } else if (all(is.character(parameters))) {
+    # newParams  <- dput(parameters)
+    newParams  <- paste0('"', x = paste0(gsub(x = as.character(parameters), pattern = "\'|\"", replacement = "'"), collapse='","'), '"')
+  }
+
   # tst <- gsub(x = readLines(targetFile), pattern = token, replacement = newParams)
   newText    <- gsub(x = newText, pattern = '\'REPLACE_PARAMS\'', replacement = newParams)
 

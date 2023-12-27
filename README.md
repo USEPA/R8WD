@@ -38,7 +38,7 @@ remotes::install_github("USEPA/R8WD")
 ```
 
 
-## Example
+## A brief example
 
 After installing `R8WD`, it can be loaded and a quarto report generated. A list of organization names available in the Water Quality Portal is available in this csv: https://cdx.epa.gov/wqx/download/DomainValues/Organization.CSV. Note that a given organization may not have data available for the time period or parameters selected.
 
@@ -47,7 +47,10 @@ After installing `R8WD`, it can be loaded and a quarto report generated. A list 
 library(R8WD)
 
 # generate a report
-create_report('BLCKFEET')
+org_name <- 'BLCKFEET'
+params   <- c("Total Phosphorus, mixed forms","Total Nitrogen, mixed forms","Escherichia coli","Dissolved oxygen (DO)")
+
+create_report(org = org_name, parameters = params)
 ```
 
 This will create and open a quarto document in RStudio. Render the quarto document to html output by pressing `Ctrl+Shift+K`.

@@ -32,6 +32,15 @@ replicate_variation_tolerance <- 30
 #| echo: false
 #| output: false
 #| include: false
+if (all(is.numeric(params_to_use))) {
+  ### accommodate character parameters or numeric index of params object
+  params_used   <- params$params[params_to_use]
+  unique_params <- unique(params$new_param[params_to_use])
+} else {
+  params_used   <- params_to_use
+  ### unique parameters are only defined for those in params$params
+  unique_params <- unique(c(params_to_use[which(!(params_to_use) %in% params$params)], params$new_param[na.omit(match(params_to_use, params$params))]))
+}
 
 plot_summary_period <- 'month'
 if (draft_report) {
@@ -42,7 +51,7 @@ if (draft_report) {
 
 tribeData2 <- getWQP(
        organization       = Tribal_org,
-       characteristicName = params$params[params_to_use],
+       characteristicName = params_used, # params$params[params_to_use],
        startDate          = start_date,
        endDate            = end_date,
        multiplier         = 0.5)
@@ -79,7 +88,8 @@ if (any(unique(allSummary$data[allSummary$data$CharacteristicName == 'TN', 'Resu
 
 included_params <- sentencify(unique(tribeData2$CharacteristicName))
 
-params_not_found <- unique(params$new_param[params_to_use])[!(unique(params$new_param[params_to_use]) %in% unique(tribeData2$CharacteristicName))]
+# params_not_found <- unique(params$new_param[params_to_use])[!(unique(params$new_param[params_to_use]) %in% unique(tribeData2$CharacteristicName))]
+params_not_found <- unique_params[!(unique_params %in% unique(tribeData2$CharacteristicName))]
 if (length(params_not_found) == 0) {
   params_not_found_message <- "All core parameters sought for this report were available in the organization's WQP data." 
 } else if (length(params_not_found) == 1) {

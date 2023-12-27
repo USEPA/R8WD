@@ -8,7 +8,9 @@ create_report(
   org = "TURTLEMT",
   startDate = "01-01-2015",
   endDate = "12-31-2022",
-  parameters = 1:11,
+  parameters = c("Total Phosphorus, mixed forms", "Total Nitrogen, mixed forms",
+    "Escherichia coli", "Dissolved oxygen (DO)", "Temperature", "Temperature, water",
+    "pH", "Turbidity", "Conductivity", "Total suspended solids"),
   extFile = "script_generateReport.qmd",
   prompt_user = TRUE,
   output = "html",
@@ -23,7 +25,7 @@ create_report(
 
 \item{endDate}{final date for data used in the report, in format `\%m-\%d-\%Y`}
 
-\item{parameters}{parameters to use in report. Must be entered as an index of acceptable parameters listed in params$params (e.g., `parameters = c(1:4,7)`)}
+\item{parameters}{parameters to use in report. Can be entered as exact characteristic names (for a complete list, see: https://cdx.epa.gov/wqx/download/DomainValues/Characteristic.CSV). Alternatively, this argument can be a numeric index of parameters listed in params$params (e.g., `parameters = c(1:4,7)`)}
 
 \item{extFile}{name of report-generating script, located in the inst/extdata folder of the R8WD R package}
 
